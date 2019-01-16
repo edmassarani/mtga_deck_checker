@@ -22,5 +22,5 @@ pipenv install
 To run the program you then simply need to run:
 
 ```
-python deck_check.py
+pipenv run python deck_check.py
 ```
