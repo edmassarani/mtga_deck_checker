@@ -179,7 +179,7 @@ class DeckChecker:
         print('Getting your collection...')
         collection = self.get_collection()
         print('Collection data acquired ✔')
-        input('<Press enter when deck is in clipboard>')
+        input('Press <Enter> when deck is in clipboard')
         print('Filtering deck...')
         dirtyDeck = self.get_deck()
         deck = self.filter_deck(dirtyDeck)
@@ -189,3 +189,4 @@ class DeckChecker:
 
 
 checker = DeckChecker()
+input('Press <Enter> to close')
