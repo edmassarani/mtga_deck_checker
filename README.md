@@ -25,7 +25,7 @@ To run the program you then simply need to run:
 pipenv run python deck_check.py
 ```
 
-Example run:
+Example run with deck copied from MTGGoldfish's export to Magic Arena:
 
 ```
 Getting your collection...
