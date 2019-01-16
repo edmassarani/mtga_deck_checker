@@ -19,11 +19,19 @@ After installing both, you must then install all the project dependencies by run
 pipenv install
 ```
 
-To run the program you then simply need to run:
+To run the program in the command line you then simply need to run:
 
 ```
 pipenv run python deck_check.py
 ```
+
+If you want to make it an executable, run:
+
+```
+pipenv run pyinstaller --onefile deck_check.py
+// The output .exe file will be in a folder called dist
+```
+
 
 Example run with deck copied from MTGGoldfish's export to Magic Arena:
 
