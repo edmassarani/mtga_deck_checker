@@ -176,10 +176,10 @@ class DeckChecker:
                 print(' ' + key + ': ' + str(value))
 
     def __init__(self):
+        print('Getting your collection...')
+        collection = self.get_collection()
+        print('Collection data acquired')
         while True:
-            print('Getting your collection...')
-            collection = self.get_collection()
-            print('Collection data acquired')
             input('Press <Enter> when deck is in clipboard')
             print('Filtering deck...')
             dirtyDeck = self.get_deck()
