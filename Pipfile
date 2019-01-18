@@ -9,6 +9,8 @@ verify_ssl = true
 pywin32 = "*"
 mtga = "*"
 pyinstaller = "*"
+autopep8 = "*"
+pylint = "*"
 
 [requires]
 python_version = "3.7"
