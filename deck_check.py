@@ -33,7 +33,10 @@ class DeckChecker:
                 line = line.strip()
                 # line = "12345: 1" (5 number id and quantity)
                 cardId = line[1:6]
-                card = all_mtga_cards.find_one(cardId)
+                try:
+                    card = all_mtga_cards.find_one(cardId)
+                except:
+                    pass
                 quantity = int(line[9])
                 collection[card.pretty_name] = [quantity, card]
             if line.find('}') > -1:
@@ -125,8 +128,10 @@ class DeckChecker:
                 owned = desired
             else:
                 owned = 0
-                card = set_data.all_mtga_cards.search(
-                    name.replace(' ', '_'), True)[0]
+                try:
+                    card = set_data.all_mtga_cards.search(name.replace(' ', '_'), True)[0]
+                except:
+                    pass
                 rarity = card.rarity
             # if the owned quantity is less than necessary
             # add that missing amount to the missing variable
