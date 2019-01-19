@@ -117,7 +117,7 @@ class DeckChecker:
 
     def print_data(self, deck, collection):
         wildcards = self.get_wild_cards()
-        self.print_info(deck[0], collection, wildcards, 'main')
+        self.print_info(deck[0], collection, wildcards, 'main deck')
         if deck[1]:
             self.print_info(deck[1], collection, wildcards, 'sideboard')
 
@@ -154,7 +154,7 @@ class DeckChecker:
             print(str(owned) + '/' + str(desired) + ' - ' + name)
 
         print('')
-        print('Missing for ' + text + ' deck')
+        print('Missing for ' + text + ':')
 
         for key, value in missing.items():
             print(' ' + key + ': ' + str(value) + '/' + str(wildcards[key]))

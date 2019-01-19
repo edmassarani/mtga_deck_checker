@@ -10,6 +10,7 @@ pywin32 = "*"
 pyinstaller = "*"
 autopep8 = "*"
 pylint = "*"
+requests = "*"
 
 [requires]
 python_version = "3.7"
