@@ -90,6 +90,7 @@ class DeckChecker:
         # variable for storing desired deck and sideboard
         # card name => quantity
         mainDeck = self.filter_cards(dirtyDeck[0])
+        sideBoard = []
 
         if dirtyDeck[1]:
             sideBoard = self.filter_cards(dirtyDeck[1])
