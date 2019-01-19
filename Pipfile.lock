@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "f2afb74f537240d9498d4aa324aaed8db06371e5802207c0f7af5f40387e58af"
+            "sha256": "489cef18d10bca1a46ce76ba065260260a3fc85ea94b960e7e1a58cc0416b39b"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -106,14 +106,6 @@
                 "sha256:dd8d182285a0fe56bace7f45b5e7d1a6ebcbf524e8f3bd87eb0f125271b8831f"
             ],
             "version": "==0.6.1"
-        },
-        "mtga": {
-            "hashes": [
-                "sha256:30e6ef7ab62e8108803a9440f8dd8b03a940b5f8426a01d61d37fa22c23eba37",
-                "sha256:ad9c9fbf0764e1928102686f729dccee6948478c704a9e15a8f1efbbb189dcbe"
-            ],
-            "index": "pypi",
-            "version": "==0.5.2"
         },
         "pefile": {
             "hashes": [

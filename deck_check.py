@@ -1,6 +1,5 @@
-from mtga.set_data import all_mtga_cards
-from mtga import set_data
 import win32clipboard
+import json
 import os
 import re
 
@@ -12,6 +11,8 @@ class DeckChecker:
     # log's location on the computer
     LOG_LOCATION = os.getenv(
         'APPDATA') + "\\..\\LocalLow\\Wizards Of The Coast\\MTGA\\output_log.txt"
+
+    STANDARD_CARDS = json.load(open('cards.json'))
 
     def get_collection(self):
         # open logfile in reading mode
@@ -33,12 +34,9 @@ class DeckChecker:
                 line = line.strip()
                 # line = "12345: 1" (5 number id and quantity)
                 cardId = line[1:6]
-                try:
-                    card = all_mtga_cards.find_one(cardId)
-                except:
-                    pass
+                card = self.STANDARD_CARDS['cards'][cardId]
                 quantity = int(line[9])
-                collection[card.pretty_name] = [quantity, card]
+                collection[card['name']] = [quantity, card]
             if line.find('}') > -1:
                 start = False
 
@@ -65,11 +63,17 @@ class DeckChecker:
     def filter_deck(self, dirtyDeck):
         # variable for storing desired deck and sideboard
         # card name => quantity
-        mainDeck = {}
-        sideBoard = {}
+        mainDeck = self.filter_cards(dirtyDeck[0])
 
+        if dirtyDeck[1]:
+            sideBoard = self.filter_cards(dirtyDeck[1])
+
+        return [mainDeck, sideBoard]
+
+    def filter_cards(self, dirtyDeck):
+        deck = {}
         # loop through each card and save them if they are valid
-        for card in dirtyDeck[0]:
+        for card in dirtyDeck:
             if not re.match(r'\d{1,2} .* \([A-Z0-9]{3}\) .*', card):
                 print('Invalid deck')
                 print('(' + card + ')\nIs not a card')
@@ -81,104 +85,54 @@ class DeckChecker:
                     stopName = idx
                     break
             name = ' '.join(card[1:stopName])
-            mainDeck[name] = quantity
+            deck[name] = quantity
 
-        if dirtyDeck[1]:
-            for card in dirtyDeck[1]:
-                if not re.match(r'\d{1,2} .* \([A-Z0-9]{3}\) .*', card):
-                    print('Invalid deck')
-                    print('(' + card + ')\nIs not a card')
-                    exit()
-                card = card.split(' ')
-                quantity = int(card[0])
-                for idx, val in enumerate(card):
-                    if re.match(r'\([A-Z0-9]{3}\)', val):
-                        stopName = idx
-                        break
-                name = ' '.join(card[1:stopName])
-                sideBoard[name] = quantity
-
-        return [mainDeck, sideBoard]
+        return deck
 
     def print_data(self, deck, collection):
-        # variable for counting the missing rarities
-        missingMain = {
-            "Common": 0,
-            "Uncommon": 0,
-            "Rare": 0,
-            "Mythic Rare": 0,
-        }
-        missingSide = {
-            "Common": 0,
-            "Uncommon": 0,
-            "Rare": 0,
-            "Mythic Rare": 0,
+        self.print_info(deck[0], collection, 'main')
+        if deck[1]:
+            self.print_info(deck[1], collection, 'sideboard')
+
+    def print_info(self, deck, collection, text):
+        missing = {
+            "common": 0,
+            "uncommon": 0,
+            "rare": 0,
+            "mythic": 0,
         }
 
         # loop through each card in the main deck
-        for name, desired in deck[0].items():
+        for name, desired in deck.items():
             # check if they exist in the colection or if it's a basic land
             # get the owned quantity of the card
             if name in collection:
-                data = collection.get(name)
+                data = collection[name]
                 owned = data[0]
                 card = data[1]
-                rarity = card.rarity
+                rarity = card['rarity']
             elif name in ['Mountain', 'Forest', 'Plains', 'Island', 'Swamp']:
                 owned = desired
             else:
                 owned = 0
-                try:
-                    card = set_data.all_mtga_cards.search(name.replace(' ', '_'), True)[0]
-                except:
-                    pass
-                rarity = card.rarity
+                cardId = self.STANDARD_CARDS['names'][str(name)]
+                card = self.STANDARD_CARDS['cards'][str(cardId)]
+                rarity = card['rarity']
             # if the owned quantity is less than necessary
             # add that missing amount to the missing variable
             if owned < desired:
-                missingMain[rarity] = missingMain[rarity] + desired - owned
+                missing[rarity] = missing[rarity] + desired - owned
             else:
                 owned = desired
             print(str(owned) + '/' + str(desired) + ' - ' + name)
 
-        if deck[1]:
-            print('')
-            # loop through each card in the sideboard
-            for name, desired in deck[1].items():
-                # check if they exist in the colection or if it's a basic land
-                # get the owned quantity of the card
-                if name in collection:
-                    data = collection.get(name)
-                    owned = data[0]
-                    card = data[1]
-                    rarity = card.rarity
-                elif name in ['Mountain', 'Forest', 'Plains', 'Island', 'Swamp']:
-                    owned = desired
-                else:
-                    owned = 0
-                    card = set_data.all_mtga_cards.search(
-                        name.replace(' ', '_'), True)[0]
-                    rarity = card.rarity
-                # if the owned quantity is less than necessary
-                # add that missing amount to the missing variable
-                if owned < desired:
-                    missingSide[rarity] = missingSide[rarity] + desired - owned
-                else:
-                    owned = desired
-                print(str(owned) + '/' + str(desired) + ' - ' + name)
-
         print('')
-        print('Missing for main deck')
+        print('Missing for ' + text + ' deck')
 
-        for key, value in missingMain.items():
+        for key, value in missing.items():
             print(' ' + key + ': ' + str(value))
 
-        if deck[1]:
-            print('')
-            print('Missing for side board')
-
-            for key, value in missingSide.items():
-                print(' ' + key + ': ' + str(value))
+        print('')
 
     def __init__(self):
         print('Getting your collection...')

@@ -7,7 +7,6 @@ verify_ssl = true
 
 [packages]
 pywin32 = "*"
-mtga = "*"
 pyinstaller = "*"
 autopep8 = "*"
 pylint = "*"
