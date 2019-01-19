@@ -40,7 +40,33 @@ class DeckChecker:
             if line.find('}') > -1:
                 start = False
 
+        logfile.close()
+
         return collection
+
+    def get_wild_cards(self):
+        logfile = open(self.LOG_LOCATION, "r")
+        match = '<== PlayerInventory.GetPlayerInventory'
+        start = False
+
+        string = ''
+
+        for line in logfile:
+            if start and line.find('[U') > -1:
+                break
+            if start:
+                string += line
+            if line.find(match) > -1:
+                start = True
+
+        data = json.loads(string)
+
+        return {
+            'common': data['wcCommon'],
+            'uncommon': data['wcUncommon'],
+            'rare': data['wcRare'],
+            'mythic': data['wcMythic']
+        }
 
     def get_deck(self):
         # get the desired deck from the clipboard
@@ -90,11 +116,12 @@ class DeckChecker:
         return deck
 
     def print_data(self, deck, collection):
-        self.print_info(deck[0], collection, 'main')
+        wildcards = self.get_wild_cards()
+        self.print_info(deck[0], collection, wildcards, 'main')
         if deck[1]:
-            self.print_info(deck[1], collection, 'sideboard')
+            self.print_info(deck[1], collection, wildcards, 'sideboard')
 
-    def print_info(self, deck, collection, text):
+    def print_info(self, deck, collection, wildcards, text):
         missing = {
             "common": 0,
             "uncommon": 0,
@@ -130,7 +157,7 @@ class DeckChecker:
         print('Missing for ' + text + ' deck')
 
         for key, value in missing.items():
-            print(' ' + key + ': ' + str(value))
+            print(' ' + key + ': ' + str(value) + '/' + str(wildcards[key]))
 
         print('')
 
