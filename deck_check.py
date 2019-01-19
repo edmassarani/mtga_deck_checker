@@ -1,5 +1,6 @@
 import win32clipboard
 import json
+import sys
 import os
 import re
 
@@ -12,7 +13,17 @@ class DeckChecker:
     LOG_LOCATION = os.getenv(
         'APPDATA') + "\\..\\LocalLow\\Wizards Of The Coast\\MTGA\\output_log.txt"
 
-    STANDARD_CARDS = json.load(open('cards.json'))
+    # determine if application is a script file or frozen exe
+    if getattr(sys, 'frozen', False):
+        application_path = os.path.dirname(sys.executable)
+        cards_path = os.path.abspath(os.path.join(
+            application_path, '..', 'cards.json'))
+    elif __file__:
+        application_path = os.path.dirname(__file__)
+        cards_path = os.path.abspath(
+            os.path.join(application_path, 'cards.json'))
+
+    STANDARD_CARDS = json.load(open(cards_path))
 
     def get_collection(self):
         # open logfile in reading mode

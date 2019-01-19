@@ -28,7 +28,7 @@ pipenv run python deck_check.py
 If you want to make it an executable, run:
 
 ```
-pipenv run pyinstaller --onefile deck_check.py
+pipenv run pyinstaller -F deck_check.py
 // The output .exe file will be in a folder called dist
 ```
 
