@@ -30,52 +30,37 @@ If you want to make it an executable, run:
 ```
 pipenv run pyinstaller -F deck_check.py
 // The output .exe file will be in a folder called dist
+// Then all you have to do is copy/paste the cards.json file into the /dist folder. 
 ```
 
 
-Example run with deck copied from MTGGoldfish's export to Magic Arena:
+Example run with deck using format accepted by "MTG: Arena":
 
 ```
 Getting your collection...
-Collection data acquired ✔
-<Press enter when deck is in clipboard>
+Collection data acquired
+Press <Enter> when deck is in clipboard
 Filtering deck...
 Comparing against collection...
 
-4/4 - Merfolk Trickster
-4/4 - Mist-Cloaked Herald
-4/4 - Siren Stormtamer
-4/4 - Tempest Djinn
-3/4 - Warkite Marauder
-1/1 - Chart a Course
-4/4 - Dive Down
-0/1 - Lookout's Dispersal
-3/4 - Opt
-2/2 - Spell Pierce
-4/4 - Wizard's Retort
-4/4 - Curious Obsession
-20/20 - Island
+0/1 - Fanatical Firebrand
+19/19 - Mountain
+0/4 - Spear Spewer
+3/4 - Ghitu Lavarunner
+2/4 - Viashino Pyromancer
+0/4 - Electrostatic Field
+4/4 - Shock
+4/4 - Lightning Strike
+1/4 - Wizard's Lightning
+0/4 - Risk Factor
+0/4 - Light Up the Stage
+0/4 - Skewer the Critics
 
-1/1 - Chart a Course
-1/1 - Spell Pierce
-1/1 - Disdainful Stroke
-1/1 - Entrancing Melody
-2/2 - Essence Scatter
-2/2 - Exclusion Mage
-0/1 - Negate
-2/2 - Sleep
-0/2 - Surge Mare
-1/2 - Transmogrifying Wand
+Missing for main deck:
+ common: 12/5
+ uncommon: 11/9
+ rare: 4/4
+ mythic: 0/4
 
-Missing for main deck
- Common: 1
- Uncommon: 1
- Rare: 1
- Mythic Rare: 0
-
-Missing for side board
- Common: 1
- Uncommon: 2
- Rare: 1
- Mythic Rare: 0
- ```
+Press <Enter> to run again or "exit" to leave
+```
