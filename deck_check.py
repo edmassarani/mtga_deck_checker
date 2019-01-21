@@ -115,7 +115,8 @@ class DeckChecker:
             if not re.match(r'\d{1,2} .* \([A-Z0-9]{3}\) .*', card):
                 print('Invalid deck')
                 print('(' + card + ')\nIs not a card')
-                exit()
+                input('Press <Enter> to try again')
+                self.__init__()
             card = card.split(' ')
             quantity = int(card[0])
             for idx, val in enumerate(card):
@@ -190,4 +191,8 @@ class DeckChecker:
                 break
 
 
-checker = DeckChecker()
+try:
+    checker = DeckChecker()
+except Exception as e:
+    print(e)
+    input()
