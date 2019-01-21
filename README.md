@@ -24,7 +24,8 @@ To run the program in the command line you then simply need to run:
 ```
 pipenv run python deck_check.py
 ```
-> P.S. Must be run in the same folder as the Pipfile
+
+> P.S. Those must be run in the same folder as the Pipfile
 
 If you want to make it an executable, run:
 
