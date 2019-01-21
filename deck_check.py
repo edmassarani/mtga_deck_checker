@@ -86,7 +86,7 @@ class DeckChecker:
         win32clipboard.CloseClipboard()
 
         # split the data into a list
-        dirtyDeck = clipboard.split('\r\n')
+        dirtyDeck = clipboard.strip().split('\r\n')
 
         dirtySideBoard = []
         # separate sideboard
