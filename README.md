@@ -58,7 +58,7 @@ Comparing against collection...
 0/4 - Light Up the Stage
 0/4 - Skewer the Critics
 
-Missing for main deck:
+Missing for main deck (nr missing / nr wildcards owned):
  common: 12/5
  uncommon: 11/9
  rare: 4/4
